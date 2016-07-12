@@ -52,6 +52,9 @@ public class Main {
         manager.readyOrder(order3);
         delivery.deliverOrder(order3);
 
+	System.out.println("1");
+	System.out.println("2");
+
 
     }
 }
