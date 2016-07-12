@@ -1,1 +1,3 @@
 Yes, this is a sample file. Indeed. 
+
+Second line, available only in the 4th commit.
