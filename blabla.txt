@@ -7,3 +7,4 @@ Bla bla
 SO BEAUTIFUL
 MASTER,MASTER
 YOU SHALL NOT CONFLICT
+si acum iti stric tot repository, numa fi atent
