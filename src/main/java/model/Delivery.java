@@ -7,11 +7,12 @@ public class Delivery extends User {
     }
 
     @Override
-    public void greeting(String username){
-        System.out.println("Delivery boy " + username +" was created");
+    public void greeting(String username) {
+        System.out.println("Delivery boy " + username + " was created");
     }
-    public void deliverOrder(Order order){
-        if(order.getOrderStatus().equals(OrderStatus.READY)&& order.getFinishTime()==0) {
+
+    public void deliverOrder(Order order) {
+        if (order.getOrderStatus().equals(OrderStatus.READY) && order.getFinishTime() == 0) {
             order.setOrderStatus(OrderStatus.DELIVERED);
             System.out.println("Order is set to " + order.getOrderStatus() + ", thus the client has received his order");
         } else {

@@ -19,8 +19,11 @@ public class Order {
         this.user = user;
         this.address = address;
         this.delivery = delivery;
-        this.productList=new ArrayList<Product>();
+        this.productList = new ArrayList<>();
         System.out.println(" with status " + this.orderStatus);
+    }
+
+    public Order() {
     }
 
     public User getUser() {
@@ -46,6 +49,7 @@ public class Order {
     public void setAddress(String address) {
         this.address = address;
     }
+
     public boolean isDelivery() {
         return delivery;
     }
@@ -61,11 +65,11 @@ public class Order {
     public void setProductList(List<Product> productList) {
         this.productList = productList;
     }
-    public void addProduct(Product product) {
-        if( product == null) {
 
-        }
-        else {
+    public void addProduct(Product product) {
+        if (product == null) {
+
+        } else {
             System.out.println(user.getUsername() + " added product " + product.getName());
             productList.add(product);
         }
@@ -76,9 +80,11 @@ public class Order {
     }
 
     public void setFinishTime(Order order) {
-        finishTime=Services.computeFinishTime(order);
+        Services services=new Services();
+        finishTime = services.computeFinishTime(order);
     }
+
     public void setFinishTime(Order order, int time) {
-        finishTime=time;
+        finishTime = time;
     }
 }
