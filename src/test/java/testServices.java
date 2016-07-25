@@ -149,4 +149,14 @@ public class testServices {
         mockOrder.setAddress("d");
         mockOrder.setAddress("d");
     }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void TestEmptyList() {
+        when(mockOrder.getAddress()).thenReturn("foo");
+        assertThat("Incorrect return", mockOrder.getAddress(), is("foo"));
+
+        when(mockOrder.getProductList()).thenReturn(new ArrayList<>());
+        List<Product> list = Mockito.spy(mockOrder.getProductList());
+        when(list.get(0)).thenReturn(product1);
+    }
 }
