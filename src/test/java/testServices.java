@@ -159,4 +159,11 @@ public class testServices {
         List<Product> list = Mockito.spy(mockOrder.getProductList());
         when(list.get(0)).thenReturn(product1);
     }
+
+    @Test
+    public void TestSX() {
+        doNothing().when(mockOrder).setDelivery(true);
+        doReturn(false).when(mockOrder).isDelivery();
+        assertThat(mockOrder.isDelivery(), is(false));
+    }
 }
