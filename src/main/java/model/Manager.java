@@ -13,7 +13,7 @@ public class Manager extends User {
 
     public void confirmOrder(Order order) {
         order.setOrderStatus(OrderStatus.CONFIRMED);
-        System.out.println("Order is set to " + order.getOrderStatus() + "so the restaurant is aware of the order and is preparing it");
+        System.out.println("Order is set to " + order.getOrderStatus() + " so the restaurant is aware of the order and is preparing it");
     }
 
     public void readyOrder(Order order) {

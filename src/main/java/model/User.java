@@ -53,5 +53,4 @@ public class User {
         System.out.print("Order creater by user "+ this.getUsername());
         return new Order(this, address, delivery);
     }
-
 }

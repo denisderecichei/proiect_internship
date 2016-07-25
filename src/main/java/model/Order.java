@@ -80,7 +80,7 @@ public class Order {
     }
 
     public void setFinishTime(Order order) {
-        Services services=new Services();
+        Services services = new Services();
         finishTime = services.computeFinishTime(order);
     }
 

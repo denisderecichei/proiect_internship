@@ -35,7 +35,6 @@ public class Services {
         }
         System.out.println("There is no such user");
         return null;
-
     }
 
     public Product searchProductByName(List<Product> products, String name) {
@@ -43,7 +42,6 @@ public class Services {
             if (x.getName().equals(name)) {
                 return x;
             }
-
         }
         System.out.println("product not found");
         return null;
@@ -73,7 +71,6 @@ public class Services {
             System.out.println("Order was under 20$, so an extra 3$ will be added for delivery.");
             return cost + 3;
         }
-
     }
 
     public List<Product> initialiseProducts() {
@@ -92,12 +89,11 @@ public class Services {
     }
 
     public List<User> initialiseManagement() {
-        List<User> userList = new ArrayList<User>();
+        List<User> userList = new ArrayList<>();
         Manager manager = new Manager("admin", "admin", "Dan");
         Delivery delivery = new Delivery("deli", "very", "livrari");
         userList.add(manager);
         userList.add(delivery);
         return userList;
-
     }
 }
