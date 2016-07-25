@@ -130,7 +130,7 @@ public class testServices {
         serviceMock.initialiseManagement();
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void TestDoWhenThen() {
         doReturn(10).when(mockOrder).getFinishTime();
         int testBool = mockOrder.getFinishTime();
@@ -145,6 +145,8 @@ public class testServices {
         when(serviceMock.initialiseProducts()).thenReturn(new ArrayList<>());
         assertThat("should be 0", serviceMock.initialiseProducts().size(), is(0));
 
-
+        doNothing().doThrow(new RuntimeException()).when(mockOrder).setAddress("d");
+        mockOrder.setAddress("d");
+        mockOrder.setAddress("d");
     }
 }
