@@ -1,6 +1,8 @@
 import model.*;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 import utils.Services;
 
@@ -71,6 +73,10 @@ public class testServices {
         Product spyProduct2 = Mockito.spy(product2);
         assertThat("Product not found", services.searchProductByName(productList, spyProduct2.getName()), is(product2));
         assertThat("Product not found", services.searchProductByName(productList, spyProduct1.getName()), is(product1));
+        verify(spyProduct1, never()).setCookingTime(0);
+        verify(spyProduct2, never()).getPrice();
+        verify(spyProduct1, times(1)).getName();
+        verify(spyProduct2, times(1)).getName();
     }
 
     @Test
@@ -79,7 +85,7 @@ public class testServices {
         assertThat("FINISH TIME ERROR", services.computeFinishTime(order1), is(17));
 
         doReturn(1000).when(serviceMock).computeDeliveryCost(mockOrder);
-        assertThat("aaaaaaaaaa", serviceMock.computeDeliveryCost(mockOrder), is(1000));
+        assertThat("Delivery cost malfunction", serviceMock.computeDeliveryCost(mockOrder), is(1000));
     }
 
     @Test(expected = NullPointerException.class)
@@ -104,6 +110,7 @@ public class testServices {
         when(mock.getFinishTime()).thenReturn(30);
         doReturn("home").when(mock).getAddress();
         assertThat("error", mock.getFinishTime(), is(30));
+        verify(mock).addProduct(Matchers.eq(product1));
     }
 
     @Test
@@ -116,6 +123,7 @@ public class testServices {
         assertThat("Not ready error", secondSpyOrder.getFinishTime(), is(0));
         user1.pickUpOrder(secondSpyOrder);
         assertThat("Picking error", secondSpyOrder.getOrderStatus(), is(OrderStatus.PICKED));
+
         verify(secondSpyOrder, never()).getAddress();
         verify(secondSpyOrder, atLeast(2)).getOrderStatus();
         verify(secondSpyOrder, atMost(7)).getOrderStatus();
@@ -133,8 +141,8 @@ public class testServices {
     @Test(expected = RuntimeException.class)
     public void TestDoWhenThen() {
         doReturn(10).when(mockOrder).getFinishTime();
-        int testBool = mockOrder.getFinishTime();
-        assertThat("not the same", testBool, is(10));
+        int testTime = mockOrder.getFinishTime();
+        assertThat("not the same", testTime, is(10));
 
         when(mockOrder.getUser()).thenReturn(user1);
         assertThat("mismatch in username", mockOrder.getUser().getUsername(), is("jdoe"));
@@ -147,6 +155,7 @@ public class testServices {
 
         doNothing().doThrow(new RuntimeException()).when(mockOrder).setAddress("d");
         mockOrder.setAddress("d");
+        verify(mockOrder).setAddress(Matchers.eq("d"));
         mockOrder.setAddress("d");
     }
 
@@ -154,16 +163,26 @@ public class testServices {
     public void TestEmptyList() {
         when(mockOrder.getAddress()).thenReturn("foo");
         assertThat("Incorrect return", mockOrder.getAddress(), is("foo"));
+        verify(mockOrder, never()).getOrderStatus();
 
         when(mockOrder.getProductList()).thenReturn(new ArrayList<>());
         List<Product> list = Mockito.spy(mockOrder.getProductList());
         when(list.get(0)).thenReturn(product1);
     }
 
-    @Test
-    public void TestSX() {
-        doNothing().when(mockOrder).setDelivery(true);
+    @Test(expected = RuntimeException.class)
+    public void TestDelivery() {
+        doNothing().doThrow(new RuntimeException()).when(mockOrder).setDelivery(true);
+        mockOrder.setDelivery(true);
         doReturn(false).when(mockOrder).isDelivery();
         assertThat(mockOrder.isDelivery(), is(false));
+        mockOrder.setDelivery(true);
     }
+
+    @AfterClass
+    public static void Closing() {
+        System.out.println();
+        System.out.println("All tests have been run successfully");
+    }
+
 }
